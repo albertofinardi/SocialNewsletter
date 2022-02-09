@@ -1,0 +1,217 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-light mt-2 justify-content-between">
+    <h1>Twitter</h1>
+    <button
+      type="button"
+      class="btn btn-sm btn-primary"
+      
+    >
+      Load profile
+    </button>
+  </nav>
+  <form [formGroup]="twitterSettings" (ngSubmit)="onSubmit()">
+    <h4 class="mt-2 mb-3">Settings</h4>
+    <div class="row mb-3">
+      <label for="inputBearer" class="col-sm-2 col-form-label"
+        >Bearer token</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="inputBearer"
+          formControlName="bearer_token"
+          placeholder="Your bearer token"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputMaxTweets" class="col-sm-2 col-form-label"
+        >Max. tweets</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="inputMaxTweets"
+          formControlName="max_tweets"
+          placeholder="Max number of tweets"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputMinLikes" class="col-sm-2 col-form-label"
+        >Min. likes</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="inputMinLikes"
+          min="-1"
+          formControlName="min_likes"
+          placeholder="Min number of likes"
+        />
+      </div>
+    </div>
+    <fieldset class="row mb-3">
+      <legend class="col-form-label col-sm-2 pt-0">Added/Fetched</legend>
+      <div class="col">
+        <div class="form-check">
+          <input
+            style="margin-right: 0.4rem"
+            type="radio"
+            name="max_added_or_fetched"
+            id="added"
+            value="added"
+            formControlName="max_added_or_fetched"
+          />
+          <label class="form-check-label" for="added"> Added </label>
+        </div>
+        <div class="form-check">
+          <input
+            style="margin-right: 0.4rem"
+            type="radio"
+            name="max_added_or_fetched"
+            id="fetched"
+            value="fetched"
+            formControlName="max_added_or_fetched"
+            checked
+          />
+          <label class="form-check-label" for="fetched"> Fetched </label>
+        </div>
+        <div class="form-check disabled">
+          <input
+            style="margin-right: 0.4rem"
+            type="radio"
+            name="max_added_or_fetched"
+            id="null"
+            value=""
+            formControlName="max_added_or_fetched"
+          />
+          <label class="form-check-label" for="null"> No limits </label>
+        </div>
+      </div>
+    </fieldset>
+    <div class="row mb-3">
+      <label for="inputQuery" class="col-sm-2 col-form-label">Filters</label>
+      <div class="col-sm-10">
+        <textarea
+          type="text"
+          class="form-control"
+          id="inputQuery"
+          rows="3"
+          formControlName="query"
+          placeholder="Query parameters"
+        ></textarea>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputDaysSpan" class="form-label">Days span (1 - 7)</label>
+      <div class="col">
+        <input
+          type="range"
+          class="form-range"
+          min="1"
+          max="7"
+          step="1"
+          value="1"
+          id="inputDaysSpan"
+          formControlName="days_span"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputExpCSV" class="col-sm-2 col-form-label"
+        >Export csv</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="inputExpCSV"
+          formControlName="export_csv"
+          placeholder="Csv results file name"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputExpJSON" class="col-sm-2 col-form-label"
+        >Export json</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="inputExpJSON"
+          formControlName="export_json"
+          placeholder="Json results file name"
+        />
+      </div>
+    </div>
+
+    <h4 class="mt-5 mb-3">Backup</h4>
+    <div class="row mb-3">
+      <label for="inputBackup" class="col-sm-2 col-form-label"
+        >Backup folder</label
+      >
+      <div class="col-sm-10">
+        <div class="input-group">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="inputBackupFolder"
+            
+          >
+            Select
+          </button>
+          <input
+            type="text"
+            class="form-control readonly"
+            placeholder="Path to backup folder"
+            aria-describedby="inputBackupFolder"
+            value=""
+            formControlName="backup_folder"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputBackCSV" class="col-sm-2 col-form-label"
+        >Backup csv</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="inputBackCSV"
+          formControlName="export_csv_backup"
+          placeholder="Backup csv file name"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputBackJSON" class="col-sm-2 col-form-label"
+        >Backup json</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="inputBackJSON"
+          formControlName="export_json_backup"
+          placeholder="Backup json file name"
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary my-4" style="margin-right: 1rem;">Start</button>
+      <button
+          type="button"
+          class="btn btn-primary my-4"
+          
+        >
+          Save profile
+        </button>
+  </form>
+</div>

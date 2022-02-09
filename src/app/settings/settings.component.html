@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-light mt-2">
+      <h1>Settings</h1>
+      </nav>
+    <form [formGroup]="generalSettings">
+      <h4 class="mt-2 mb-3">Default profiles</h4>
+      <div class="row mb-3">
+        <label for="inputBackup" class="col-sm-2 col-form-label"
+          >Twitter</label
+        >
+        <div class="col-sm-10">
+          <div class="input-group">
+            <button class="btn btn-outline-secondary" type="button" id="inputTwitterProfileDefault" (click)="setProfile('twitterProfileDefault')">Select</button>
+            <input type="text" class="form-control readonly" placeholder="Path to twitter default profile" aria-describedby="inputTwitterProfileDefault" value="" formControlName="twitter_default" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputBackup" class="col-sm-2 col-form-label"
+          >Reddit</label
+        >
+        <div class="col-sm-10">
+          <div class="input-group">
+            <button class="btn btn-outline-secondary" type="button" id="inputRedditProfileDefault" (click)="setProfile('redditProfileDefault')">Select</button>
+            <input type="text" class="form-control readonly" placeholder="Path to reddit default profile" aria-describedby="inputRedditProfileDefault" value="" formControlName="reddit_default" readonly>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

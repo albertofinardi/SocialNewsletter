@@ -8,9 +8,11 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
+# https://exerror.com/compiling-with-angular-sources-in-ivy-partial-compilation-mode-transform-failed-with-1-error-error-invalid-version-15-2-15-3/
+
 last 1 Chrome version
 last 1 Firefox version
 last 2 Edge major versions
-last 2 Safari major versions
-last 2 iOS major versions
+# last 2 Safari major versions
+# last 2 iOS major versions
 Firefox ESR
