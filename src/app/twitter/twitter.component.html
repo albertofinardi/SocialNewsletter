@@ -31,11 +31,13 @@
       >
       <div class="col-sm-10">
         <input
+          [ngClass]="twitterSettings.controls['max_added_or_fetched'].value == '' ? 'readonly' : ''"
           type="number"
           class="form-control"
           id="inputMaxTweets"
           formControlName="max_tweets"
           placeholder="Max number of tweets"
+          [readonly]="twitterSettings.controls['max_added_or_fetched'].value == ''"
         />
       </div>
     </div>
@@ -66,7 +68,7 @@
             value="added"
             formControlName="max_added_or_fetched"
           />
-          <label class="form-check-label" for="added"> Added </label>
+          <label class="form-check-label" for="added">Added</label>
         </div>
         <div class="form-check">
           <input
@@ -78,7 +80,7 @@
             formControlName="max_added_or_fetched"
             checked
           />
-          <label class="form-check-label" for="fetched"> Fetched </label>
+          <label class="form-check-label" for="fetched">Fetched</label>
         </div>
         <div class="form-check disabled">
           <input
@@ -89,7 +91,7 @@
             value=""
             formControlName="max_added_or_fetched"
           />
-          <label class="form-check-label" for="null"> No limits </label>
+          <label class="form-check-label" for="null"> No limits</label>
         </div>
       </div>
     </fieldset>
@@ -208,7 +210,7 @@
     </div>-->
     <div class="text-danger" *ngIf="error != ''">{{error}}</div>
     
-    <button type="submit" class="btn btn-primary my-4" style="margin-right: 1rem;">Start</button>
+    <button type="submit" class="btn btn-primary my-4" style="margin-right: 1rem;" [disabled]="!twitterSettings.valid || fetching" >Start</button>
       <button
           type="button"
           class="btn btn-primary my-4"

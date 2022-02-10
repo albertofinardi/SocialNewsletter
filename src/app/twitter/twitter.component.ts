@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { dialog, fs, http } from '@tauri-apps/api';
+import { environment } from 'src/environments/environment';
 
 import { TweetQuery } from './core/twitter_manager';
 
@@ -13,13 +14,14 @@ import { TweetQuery } from './core/twitter_manager';
 export class TwitterComponent {
 
   error = ''
+  fetching = false
 
   twitterSettings = new FormGroup({
-    bearer_token: new FormControl('AAAAAAAAAAAAAAAAAAAAALO0YQEAAAAA0DVeZeNa0gvvIMyz1oupExmLSwY%3DkueA2JTVEFh44CwPG5Xfu7grxCx0G7MPMYNWkugbHVn7Ts6NnI', Validators.required),
-    max_tweets: new FormControl(500),
+    bearer_token: new FormControl(environment.bearer, Validators.required),
+    max_tweets: new FormControl(500, Validators.required),
     min_likes: new FormControl(0, Validators.required),
     max_added_or_fetched: new FormControl('fetched'),
-    query: new FormControl('a'),
+    query: new FormControl(environment.query, Validators.required),
     days_span: new FormControl(1, Validators.required),
     export_csv: new FormControl('data', Validators.required),
     export_json: new FormControl('data', Validators.required),
@@ -153,6 +155,7 @@ export class TwitterComponent {
       }
       console.log("-------------------")
       console.log("Token: ", next_token)
+      this.fetching = true;
       var res: any = await fetchData(twq, max_results, today.toISOString(), start.toISOString(), next_token);
 
       /* Se ci sono errori nella richiesta esce prima */
@@ -180,6 +183,7 @@ export class TwitterComponent {
           console.log("Total # of Tweets fetched: ", total_tweets)
           console.log("Total # of Tweets added: ", total_tweets_added)
           console.log("-------------------")
+          this.error = "Loading...\nTotal # of Tweets fetched: "+total_tweets+"\nTotal # of Tweets added: "+ total_tweets_added;
           sleep(5000)
         }
       } else {
@@ -190,6 +194,7 @@ export class TwitterComponent {
           console.log("Total # of Tweets fetched: ", total_tweets)
           console.log("Total # of Tweets added: ", total_tweets_added)
           console.log("-------------------")
+          this.error = "Loading...\nTotal # of Tweets fetched: "+total_tweets+"\nTotal # of Tweets added: "+ total_tweets_added;
           sleep(5000)
         }
         flag = false
@@ -198,6 +203,7 @@ export class TwitterComponent {
       sleep(5000)
 
     }
+    this.fetching = false;
     console.log("Total number of fetched: ", total_tweets)
     console.log("Total number of added: ", total_tweets_added)
 
