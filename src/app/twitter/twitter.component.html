@@ -4,7 +4,7 @@
     <button
       type="button"
       class="btn btn-sm btn-primary"
-      
+      (click)="loadProfile()"
     >
       Load profile
     </button>
@@ -205,11 +205,12 @@
         />
       </div>
     </div>
+    <div class="text-danger" *ngIf="error != ''">{{error}}</div>
     <button type="submit" class="btn btn-primary my-4" style="margin-right: 1rem;">Start</button>
       <button
           type="button"
           class="btn btn-primary my-4"
-          
+          (click)="saveProfile()"
         >
           Save profile
         </button>
