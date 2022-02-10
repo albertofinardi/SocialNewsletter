@@ -1,3 +1,3 @@
 # Social Newsletter
 
-View packages to download the application.
+View releases to download the application.
