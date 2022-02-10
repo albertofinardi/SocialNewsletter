@@ -8,6 +8,19 @@
         <ul
           class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center justify-content-between w-100 px-3 align-items-center"
         >
+        <li class="nav-item">
+          <button
+            routerLink="/home"
+            routerLinkActive="btn-primary"
+            class="btn animate my-2"
+            style="border-radius: 100%"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="Home"
+          >
+            <i class="bi-house-door-fill fs-5"></i>
+          </button>
+        </li>
           <li class="nav-item">
             <button
               routerLink="/twitter"
@@ -60,36 +73,20 @@
               <i class="bi-terminal-fill fs-5"></i>
             </button>
           </li>
-          <li class="nav-item">
-            <a
-              href="/home"
-              class="nav-link py-3 px-2"
-              title=""
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Products"
-            >
-              <i class="bi-heart fs-5"></i>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="nav-link py-3 px-2"
-              title=""
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              data-bs-original-title="Customers"
-            >
-              <i class="bi-people fs-5"></i>
-            </a>
-          </li>
         </ul>
       </div>
     </div>
-    <div class="col-sm min-vh-100">
+    <div class="col-sm" style="min-height: 95vh;">
       <!-- content -->
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3">
+    <b>Alpha version</b>
+  </div>
+  <!-- Copyright -->
+</footer>

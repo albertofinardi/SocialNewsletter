@@ -10,16 +10,8 @@ import { Command } from '@tauri-apps/api/shell'
 })
 export class HomeComponent implements OnInit {
 
-  out = '';
-
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  async run(){
-    const command = Command.sidecar('my-sidecar')
-    const output = await command.execute()
-    this.out = output.stdout
   }
 }

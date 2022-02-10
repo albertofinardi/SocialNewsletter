@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TerminalComponent implements OnInit {
 
-  log = 'Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao Ciao'
-
+  log = 'TODO'
   constructor() { }
 
   ngOnInit(): void {
