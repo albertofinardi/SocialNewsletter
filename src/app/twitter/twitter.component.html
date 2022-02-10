@@ -208,7 +208,7 @@
         />
       </div>
     </div>-->
-    <div class="text-danger" *ngIf="error != ''">{{error}}</div>
+    <div class="text-danger" *ngIf="error != ''" [innerHTML]="error"></div>
     
     <button type="submit" class="btn btn-primary my-4" style="margin-right: 1rem;" [disabled]="!twitterSettings.valid || fetching" >Start</button>
       <button

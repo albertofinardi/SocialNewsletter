@@ -183,7 +183,7 @@ export class TwitterComponent {
           console.log("Total # of Tweets fetched: ", total_tweets)
           console.log("Total # of Tweets added: ", total_tweets_added)
           console.log("-------------------")
-          this.error = "Loading...\nTotal # of Tweets fetched: "+total_tweets+"\nTotal # of Tweets added: "+ total_tweets_added;
+          this.error = "Loading...<br>Total # of Tweets fetched: "+total_tweets+"<br>Total # of Tweets added: "+ total_tweets_added;
           sleep(5000)
         }
       } else {
@@ -194,7 +194,7 @@ export class TwitterComponent {
           console.log("Total # of Tweets fetched: ", total_tweets)
           console.log("Total # of Tweets added: ", total_tweets_added)
           console.log("-------------------")
-          this.error = "Loading...\nTotal # of Tweets fetched: "+total_tweets+"\nTotal # of Tweets added: "+ total_tweets_added;
+          this.error = "Loading...<br>Total # of Tweets fetched: "+total_tweets+"<br>Total # of Tweets added: "+ total_tweets_added;
           sleep(5000)
         }
         flag = false
