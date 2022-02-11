@@ -48,7 +48,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-          "https://raw.githubusercontent.com/albertofinardi/SocialNewsletter/main/updater.json"
+          "https://gist.githubusercontent.com/albertofinardi/578de64cdf96062ece09f367371098d0/raw"
       ],
       "dialog": true,
       "pubkey": ""
