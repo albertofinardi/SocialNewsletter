@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "Social Newsletter",
-    "version": "0.1.0"
+    "version": "0.0.1"
   },
   "build": {
     "distDir": "../dist/social_newsletter",
@@ -50,8 +50,7 @@
       "endpoints": [
           "https://gist.githubusercontent.com/albertofinardi/578de64cdf96062ece09f367371098d0/raw"
       ],
-      "dialog": true,
-      "pubkey": ""
+      "dialog": true
   },
     "allowlist": {
       "all": true
