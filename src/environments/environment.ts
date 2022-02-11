@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  bearer: '',
+  bearer: 'AAAAAAAAAAAAAAAAAAAAALO0YQEAAAAA0DVeZeNa0gvvIMyz1oupExmLSwY%3DkueA2JTVEFh44CwPG5Xfu7grxCx0G7MPMYNWkugbHVn7Ts6NnI',
   query: 'a lang:en'
 };
 
