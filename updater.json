@@ -1,0 +1,15 @@
+{
+    "name":"v0.1.0",
+    "notes":"Alpha version",
+    "pub_date":"2022-02-11T19:25:57Z",
+    "platforms": {
+        "darwin": {
+            "signature":"",
+            "url":"https://github.com/albertofinardi/SocialNewsletter/releases/download/alpha/Social.Newsletter_0.1.0_x64.dmg"
+        },
+        "win64": {
+            "signature":"",
+            "url":"https://github.com/albertofinardi/SocialNewsletter/releases/download/alpha/Social.Newsletter_0.1.0_x64.msi"
+        }
+    }
+}

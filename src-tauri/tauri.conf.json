@@ -46,8 +46,13 @@
       }
     },
     "updater": {
-      "active": false
-    },
+      "active": true,
+      "endpoints": [
+          "https://gist.github.com/albertofinardi/578de64cdf96062ece09f367371098d0/raw"
+      ],
+      "dialog": true,
+      "pubkey": ""
+  },
     "allowlist": {
       "all": true
     },
