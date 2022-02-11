@@ -138,6 +138,7 @@ export class TwitterComponent {
     const max_results = 100;
     const today = new Date(Date.now() - 30000)
     const start = new Date(new Date().setDate(today.getDate() - twq.days_span) - 30000)
+    const terminalWindow = document.getElementById("terminal");
 
     var data: any[] = []
     var users: any[] = []
@@ -165,6 +166,7 @@ export class TwitterComponent {
       if (res.ok == false) {
         var texts = res.data.errors.map((el: any) => el.message);
         this.error = texts;
+        this.log = texts;
         this.fetching = false;
         break;
       }
