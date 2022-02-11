@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { dialog, fs, http } from '@tauri-apps/api';
 import { environment } from 'src/environments/environment';
 
@@ -13,12 +14,14 @@ import { TweetQuery } from './core/twitter_manager';
 })
 export class TwitterComponent {
 
+  log = 'Nothing to see...'
   error = ''
   fetching = false
+  percentage = 0;
 
   twitterSettings = new FormGroup({
     bearer_token: new FormControl(environment.bearer, Validators.required),
-    max_tweets: new FormControl(500, Validators.required),
+    max_tweets: new FormControl(500, Validators.min(10)),
     min_likes: new FormControl(0, Validators.required),
     max_added_or_fetched: new FormControl('fetched'),
     query: new FormControl(environment.query, Validators.required),
@@ -33,13 +36,10 @@ export class TwitterComponent {
   async onSubmit() {
     let tweetQuery = new TweetQuery()
     tweetQuery = this.twitterSettings.value;
-    this.error = 'Loading...'
+    this.error = ''
     try {
       let result = await this.getData(tweetQuery);
-      let name = 'result'
-      dialog.save({
-        filters: [{ extensions: ['json'], name: name }],
-      }).then(path => {
+      dialog.save({filters: [{extensions: ['json'], name: 'jsonFilter'}]}).then(path => {
         fs.writeFile({
           path: path,
           contents: result!
@@ -53,7 +53,7 @@ export class TwitterComponent {
 
   async loadProfile() {
     let file;
-    dialog.open().then(async path => {
+    dialog.open({filters: [{extensions: ['social'], name: 'socialFilter'}]}).then(async path => {
       file = await fs.readTextFile(path.toString())
       let json = JSON.parse(file)
 
@@ -70,9 +70,7 @@ export class TwitterComponent {
 
   async saveProfile() {
     let profile = JSON.stringify(this.twitterSettings.getRawValue());
-    dialog.save({
-      filters: [{ extensions: ['social'], name: 'social' }],
-    }).then(path => {
+    dialog.save({filters: [{extensions: ['social'], name: 'socialFilter'}]}).then(path => {
       fs.writeFile({
         path: path,
         contents: profile
@@ -89,7 +87,16 @@ export class TwitterComponent {
     })
   }
 
-  constructor() { }
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'Output',
+      size: 'xl',
+      keyboard: !this.fetching,
+      backdrop: this.fetching ? 'static' : true
+    })
+  }
+
+  constructor(private modalService: NgbModal) { }
 
   async getData(twq: TweetQuery) {
 
@@ -105,7 +112,7 @@ export class TwitterComponent {
           "Authorization": headers.toString(),
         }
       })
-  
+
     }
 
     const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
@@ -140,22 +147,25 @@ export class TwitterComponent {
     var flag = true;
     var next_token = null
     var result_count = 0;
+    this.percentage = 0
+    this.log = ''
+    this.fetching = true;
+  
 
-    while (flag) {
+    while (flag && this.fetching) {
       if (twq.max_added_or_fetched == 'fetched' && total_tweets >= twq.max_tweets) {
         break;
       } else if (twq.max_added_or_fetched == 'added' && total_tweets_added >= twq.max_tweets) {
         break;
       }
-      console.log("-------------------")
-      console.log("Token: ", next_token)
-      this.fetching = true;
+      this.log += "-------------------<br>Token: " + next_token
       var res: any = await fetchData(twq, max_results, today.toISOString(), start.toISOString(), next_token);
 
       /* Se ci sono errori nella richiesta esce prima */
       if (res.ok == false) {
         var texts = res.data.errors.map((el: any) => el.message);
         this.error = texts;
+        this.fetching = false;
         break;
       }
 
@@ -164,31 +174,35 @@ export class TwitterComponent {
 
       data = data.concat(filtered)
 
-      /* Rimuovere utenti già eslusi post filter like */
+      /* TODO Rimuovere utenti già eslusi post filter like */
       users = users.concat(res.data.includes.users)
 
       if (res.data.meta.next_token != null && res.data.meta.next_token != "") {
         next_token = res.data.meta.next_token
-        console.log("Next Token: ", next_token)
+        this.log += "<br>Next Token: " + next_token;
         if (result_count != null && result_count > 0 && next_token != null) {
-          console.log("-------------------")
           total_tweets_added += filtered.length
           total_tweets += result_count
-          console.log("Total # of Tweets fetched: ", total_tweets)
-          console.log("Total # of Tweets added: ", total_tweets_added)
-          console.log("-------------------")
-          this.error = "Loading...<br>Total # of Tweets fetched: "+total_tweets+"<br>Total # of Tweets added: "+ total_tweets_added;
+          this.log += "<br>-------------------<br>Total # of Tweets fetched: " + total_tweets + "<br>Total # of Tweets added: " + total_tweets_added + "<br>-------------------"
+          if (twq.max_added_or_fetched == 'fetched') {
+            this.percentage = total_tweets / twq.max_tweets * 100;
+          }
+          if (twq.max_added_or_fetched == 'added') {
+            this.percentage = total_tweets_added / twq.max_tweets * 100;
+          }
           await sleep(5000)
         }
       } else {
         if (result_count != null && result_count > 0) {
-          console.log("-------------------")
           total_tweets_added += filtered.length
           total_tweets += result_count
-          console.log("Total # of Tweets fetched: ", total_tweets)
-          console.log("Total # of Tweets added: ", total_tweets_added)
-          console.log("-------------------")
-          this.error = "Loading...<br>Total # of Tweets fetched: "+total_tweets+"<br>Total # of Tweets added: "+ total_tweets_added;
+          this.log += "<br>-------------------<br>Total # of Tweets fetched: " + total_tweets + "<br>Total # of Tweets added: " + total_tweets_added + "<br>-------------------"
+          if (twq.max_added_or_fetched == 'fetched') {
+            this.percentage = total_tweets / twq.max_tweets * 100;
+          }
+          if (twq.max_added_or_fetched == 'added') {
+            this.percentage = total_tweets_added / twq.max_tweets * 100;
+          }
           await sleep(5000)
         }
         flag = false
@@ -198,9 +212,8 @@ export class TwitterComponent {
 
     }
     this.fetching = false;
-    console.log("Total number of fetched: ", total_tweets)
-    console.log("Total number of added: ", total_tweets_added)
-
+    this.log += "<br><br>Total number of fetched: " + total_tweets + "<br>Total number of added: " + total_tweets_added
+    this.percentage = 100;
     return exportData(users, filtered)
   }
 

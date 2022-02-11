@@ -9,7 +9,7 @@
       Load profile
     </button>
   </nav>
-  <form [formGroup]="twitterSettings" (ngSubmit)="onSubmit()">
+  <form [formGroup]="twitterSettings" (ngSubmit)="open(terminal); onSubmit()">
     <h4 class="mt-2 mb-3">Settings</h4>
     <div class="row mb-3">
       <label for="inputBearer" class="col-sm-2 col-form-label"
@@ -214,9 +214,29 @@
       <button
           type="button"
           class="btn btn-primary my-4"
+          style="margin-right: 1rem;"
           (click)="saveProfile()"
         >
           Save profile
         </button>
+        <button type="button" class="btn btn-outline-primary" (click)="open(terminal)">Open output</button>
   </form>
+  <ng-template #terminal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Output</h4>
+      <button type="button" class="btn close" aria-label="Close" (click)="modal.dismiss('Cross click')" [disabled]="fetching">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <section class="bg-dark text-white mb-4" style="border-radius: 5px; height: 60vh; overflow-y: auto;" id="modalBody">
+        <p class="p-4"><samp [innerHTML]="log"></samp></p>
+      </section>
+      <ngb-progressbar type="primary" *ngIf="fetching" [value]="percentage"></ngb-progressbar>
+    </div>
+    <div class="modal-footer">
+      <button type="button" ngbAutoFocus class="btn btn-danger text-white" (click)="fetching = false" [disabled]="!fetching">Stop</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" [disabled]="fetching">Close</button>
+    </div>
+  </ng-template>
 </div>
