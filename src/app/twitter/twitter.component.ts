@@ -108,13 +108,7 @@ export class TwitterComponent {
   
     }
 
-    function sleep(milliseconds: number) {
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < milliseconds);
-    }
+    const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
 
     function filterLike(tweet: any) {
       return tweet.public_metrics.like_count >= twq.min_likes;
@@ -184,7 +178,7 @@ export class TwitterComponent {
           console.log("Total # of Tweets added: ", total_tweets_added)
           console.log("-------------------")
           this.error = "Loading...<br>Total # of Tweets fetched: "+total_tweets+"<br>Total # of Tweets added: "+ total_tweets_added;
-          sleep(5000)
+          await sleep(5000)
         }
       } else {
         if (result_count != null && result_count > 0) {
@@ -195,12 +189,12 @@ export class TwitterComponent {
           console.log("Total # of Tweets added: ", total_tweets_added)
           console.log("-------------------")
           this.error = "Loading...<br>Total # of Tweets fetched: "+total_tweets+"<br>Total # of Tweets added: "+ total_tweets_added;
-          sleep(5000)
+          await sleep(5000)
         }
         flag = false
         next_token = ""
       }
-      sleep(5000)
+      await sleep(5000)
 
     }
     this.fetching = false;
