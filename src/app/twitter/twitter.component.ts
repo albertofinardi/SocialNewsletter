@@ -45,6 +45,7 @@ export class TwitterComponent {
           contents: result!
         })
       })
+
       this.error = ''
     } catch (err: any) {
       this.error = err
@@ -127,18 +128,20 @@ export class TwitterComponent {
       filtered.forEach((element: any) => {
         const user = users.find(x => x.id === element.author_id)
         const tweet = {
+          ratio: element.public_metrics.like_count / (user.public_metrics.followers_count == 0 ? 1 : user.public_metrics.followers_count),
           tweet: element,
           user: user
         }
         resultObj.push(tweet)
       });
+
+      resultObj.sort((a,b) => (a.ratio > b.ratio) ? -1 : ((b.ratio > a.ratio) ? 1 : 0))
       return JSON.stringify(resultObj);
     }
 
     const max_results = 100;
     const today = new Date(Date.now() - 30000)
     const start = new Date(new Date().setDate(today.getDate() - twq.days_span) - 30000)
-    const terminalWindow = document.getElementById("terminal");
 
     var data: any[] = []
     var users: any[] = []

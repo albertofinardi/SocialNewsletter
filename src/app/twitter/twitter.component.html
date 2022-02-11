@@ -233,6 +233,7 @@
         <p class="p-4"><samp [innerHTML]="log"></samp></p>
       </section>
       <ngb-progressbar type="primary" *ngIf="fetching" [value]="percentage"></ngb-progressbar>
+      <small *ngIf="fetching">When finished, the save dialog will be show</small>
     </div>
     <div class="modal-footer">
       <button type="button" ngbAutoFocus class="btn btn-danger text-white" (click)="fetching = false" [disabled]="!fetching">Stop</button>
